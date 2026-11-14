@@ -1,0 +1,49 @@
+<div dir="rtl">
+
+# پنل ایدیوگرام ۴ روی مدال
+
+پیش‌نیاز: اکانت مدال + اکانت هاگینگ‌فیس. اول لایسنس مدل را در هاگینگ‌فیس قبول کنید:
+
+https://huggingface.co/ideogram-ai/ideogram-4-nf4-diffusers
+
+</div>
+
+```bash
+pip install modal
+modal setup
+```
+
+<div dir="rtl">
+
+ساخت سکرت‌ها (توکن هاگینگ‌فیس: Settings ← Access Tokens؛ کلید مجیک پرامپت: از ideogram.ai بخش Manage API):
+
+</div>
+
+```bash
+modal secret create ideogram4-model-auth HF_TOKEN=xxx IDEOGRAM_API_KEY=xxx
+modal secret create ideogram4-panel-auth PANEL_USER=admin PANEL_PASSWORD=xxx
+```
+
+<div dir="rtl">
+
+کلید IDEOGRAM_API_KEY اختیاری است؛ اگر نگذارید، در پنل آپ‌سمپلر Qwen (local) را انتخاب کنید.
+
+دیپلوی:
+
+</div>
+
+```bash
+modal deploy gradio_ideogram4_panel.py
+```
+
+<div dir="rtl">
+
+لینک پنل در انتهای خروجی چاپ می‌شود؛ با همان نام کاربری و رمز وارد شوید.
+
+حذف اپ:
+
+</div>
+
+```bash
+modal app stop ideogram4-panel
+```
