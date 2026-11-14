@@ -44,6 +44,8 @@ modal secret create ideogram4-panel-auth PANEL_USER=admin PANEL_PASSWORD=xxx
 
 کلید IDEOGRAM_API_KEY اختیاری است؛ اگر نگذارید، در پنل آپ‌سمپلر Qwen (local) را انتخاب کنید.
 
+هشدار: اگر سکرتی را پاک کردید و دوباره ساختید، اپِ دیپلوی‌شده هنوز به سکرت قبلی وصل است و کانتینرها با ارور Secret not found کرش می‌کنند. بعد از بازسازی هر سکرت، حتماً دوباره دیپلوی کنید: ‎modal deploy gradio_ideogram4_panel.py‎
+
 دیپلوی:
 
 </div>
