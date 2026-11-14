@@ -449,3 +449,28 @@ def gradio_app():
         return await call_next(request)
 
     return gr.mount_gradio_app(web_app, build_panel(), path="/")
+
+
+# ---------------- One-time warmup / pre-download ----------------
+
+@app.local_entrypoint()
+def warmup():
+    """Run once after deploy: downloads the weights onto the volume,
+    loads the model and generates one small test image, so the first
+    Generate in the panel does not wait for the download.
+    Usage: modal run gradio_ideogram4_panel.py
+    """
+    result = ModelServer().generate.remote(
+        JSON_EXAMPLE,
+        height=512,
+        width=512,
+        seed=42,
+        upsampler="off",
+        num_inference_steps=12,
+        guidance_schedule=[7.0] * 11 + [3.0],
+        guidance_scale=7.0,
+        mu=0.5,
+        std=1.75,
+        color_palette=None,
+    )
+    print("Warmup done. Seed:", result["seed"])
