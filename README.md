@@ -8,10 +8,24 @@ https://huggingface.co/ideogram-ai/ideogram-4-nf4-diffusers
 
 </div>
 
+<div dir="rtl">
+
+گرفتن پروژه و نصب مدال (در ترمینال کیلرکودا):
+
+</div>
+
 ```bash
-pip install modal
+git clone https://github.com/Iman8990/ideogram4-panel.git
+cd ideogram4-panel
+pip install modal --break-system-packages
 modal setup
 ```
+
+<div dir="rtl">
+
+نکته: در اوبونتوهای جدید (مثل کیلرکودا) دستور ساده‌ی pip ارور externally-managed-environment می‌دهد؛ فلگ ‎--break-system-packages‎ آن را حل می‌کند و در این محیط تمرینی اشکالی ندارد.
+
+</div>
 
 <div dir="rtl">
 
