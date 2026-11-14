@@ -6,6 +6,8 @@
 
 https://huggingface.co/ideogram-ai/ideogram-4-nf4-diffusers
 
+مهم: این قبول لایسنس باید با همان اکانتی باشد که توکنش را در سکرت می‌گذارید. اگر ردش کنید، موقع ساخت عکس ارور GatedRepoError (403) می‌گیرید و کانتینر کرش می‌کند.
+
 </div>
 
 <div dir="rtl">
