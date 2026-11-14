@@ -54,10 +54,12 @@ modal deploy gradio_ideogram4_panel.py
 
 لینک پنل در انتهای خروجی چاپ می‌شود؛ با همان نام کاربری و رمز وارد شوید.
 
-حذف اپ:
+حذف کامل (اپ + سکرت‌ها):
 
 </div>
 
 ```bash
 modal app stop ideogram4-panel
+modal secret delete ideogram4-model-auth -y
+modal secret delete ideogram4-panel-auth -y
 ```
