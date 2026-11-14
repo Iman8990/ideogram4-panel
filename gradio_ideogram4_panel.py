@@ -17,8 +17,6 @@ import random
 import time
 
 import modal
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
 
 MODEL_REPO = "ideogram-ai/ideogram-4-nf4-diffusers"
 MODEL_DIR = "/models"
@@ -414,37 +412,40 @@ def build_panel():
     return demo
 
 
-web_app = FastAPI()
-
-
-@web_app.middleware("http")
-async def basic_auth(request: Request, call_next):
-    user = os.environ.get("PANEL_USER", "")
-    password = os.environ.get("PANEL_PASSWORD", "")
-    if user and password:
-        auth = request.headers.get("authorization", "")
-        ok = False
-        if auth.startswith("Basic "):
-            try:
-                decoded = base64.b64decode(auth[6:]).decode("utf-8")
-                u, _, p = decoded.partition(":")
-                ok = u == user and p == password
-            except Exception:
-                ok = False
-        if not ok:
-            return JSONResponse(
-                status_code=401,
-                content={"detail": "Login required"},
-                headers={"WWW-Authenticate": "Basic"},
-            )
-    return await call_next(request)
-
-
 # max_containers=1: Gradio's queue keeps state in memory — join and stream
 # must hit the same container, or the stream 404s mid-generation.
+# fastapi/gradio are imported inside this function on purpose: they only
+# exist in the Modal image, so `modal deploy` on a fresh machine needs
+# nothing but the modal package itself.
 @app.function(image=image, secrets=panel_secrets, timeout=1800, max_containers=1, scaledown_window=300)
 @modal.asgi_app()
 def gradio_app():
     import gradio as gr
+    from fastapi import FastAPI, Request
+    from fastapi.responses import JSONResponse
+
+    web_app = FastAPI()
+
+    @web_app.middleware("http")
+    async def basic_auth(request: Request, call_next):
+        user = os.environ.get("PANEL_USER", "")
+        password = os.environ.get("PANEL_PASSWORD", "")
+        if user and password:
+            auth = request.headers.get("authorization", "")
+            ok = False
+            if auth.startswith("Basic "):
+                try:
+                    decoded = base64.b64decode(auth[6:]).decode("utf-8")
+                    u, _, p = decoded.partition(":")
+                    ok = u == user and p == password
+                except Exception:
+                    ok = False
+            if not ok:
+                return JSONResponse(
+                    status_code=401,
+                    content={"detail": "Login required"},
+                    headers={"WWW-Authenticate": "Basic"},
+                )
+        return await call_next(request)
 
     return gr.mount_gradio_app(web_app, build_panel(), path="/")
