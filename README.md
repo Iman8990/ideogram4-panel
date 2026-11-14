@@ -17,13 +17,13 @@ https://huggingface.co/ideogram-ai/ideogram-4-nf4-diffusers
 ```bash
 git clone https://github.com/Iman8990/ideogram4-panel.git
 cd ideogram4-panel
-pip install modal --break-system-packages
+pip install modal --break-system-packages --ignore-installed
 modal setup
 ```
 
 <div dir="rtl">
 
-نکته: در اوبونتوهای جدید (مثل کیلرکودا) دستور ساده‌ی pip ارور externally-managed-environment می‌دهد؛ فلگ ‎--break-system-packages‎ آن را حل می‌کند و در این محیط تمرینی اشکالی ندارد.
+نکته: در اوبونتوهای جدید (مثل کیلرکودا) دستور ساده‌ی pip دو ارور می‌دهد: externally-managed-environment و Cannot uninstall برای پکیج‌هایی که خود اوبونتو نصب کرده. دو فلگ بالا هر دو را حل می‌کنند و در این محیط تمرینی اشکالی ندارند.
 
 </div>
 
